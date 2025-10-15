@@ -65,7 +65,7 @@ class CategoryDAO(
         var category: Category? = null
         // Define a projection that specifies which columns from the database
         // you will actually use after this query
-        var projection = arrayOf(Category.COLUMN_ID, Category.COLUMN_NAME)
+        var projection: Array<String> = arrayOf(Category.COLUMN_ID, Category.COLUMN_NAME)
 
         // Filter results WHERE "id" = 'myId'
         val selection = "${Category.COLUMN_ID} = $id"
@@ -95,7 +95,33 @@ class CategoryDAO(
         return  category
     }
 
-
+    fun getAllCategories(): List<Category> {
+        val items: MutableList<Category> = mutableListOf()
+        val projection: Array<String> = arrayOf(Category.COLUMN_ID, Category.COLUMN_NAME)
+        try {
+            val cursor = db.query(
+                Category.TABLE_NAME,       // table name
+                projection,             // array of cols to return (write null to get all)
+                null,                  // cols for the WHERE clause
+                null,               // vals for the WHERE clause
+                null,                   // don't group the rows
+                null,                    // don't filter by row groups
+                null,
+            )
+            // Read the cursor data
+            while (cursor.moveToNext()) {
+                val categoryId = cursor.getInt(cursor.getColumnIndexOrThrow(Category.COLUMN_ID))
+                val categoryName = cursor.getString(cursor.getColumnIndexOrThrow(Category.COLUMN_NAME))
+                val category = Category(categoryId, categoryName)
+                items.add(category)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            close()
+        }
+        return items
+    }
 
 
 
