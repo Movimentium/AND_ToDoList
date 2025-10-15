@@ -7,7 +7,9 @@ import com.miguel_gallego.and_todolist.databinding.ItemCategoryBinding
 
 class CategoryAdapter(
     var items: List<Category>,
-    val onClick: (Int) -> Unit
+    val onClick: (Int) -> Unit,
+    val onEdit: (Int) -> Unit,
+    val onDelete: (Int) -> Unit
 ): RecyclerView.Adapter<CategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
@@ -21,6 +23,12 @@ class CategoryAdapter(
         holder.render(item)
         holder.itemView.setOnClickListener {
             onClick(position)
+        }
+        holder.binding.btnEdit.setOnClickListener {
+            onEdit(position)
+        }
+        holder.binding.btnDelete.setOnClickListener {
+            onDelete(position)
         }
     }
 
