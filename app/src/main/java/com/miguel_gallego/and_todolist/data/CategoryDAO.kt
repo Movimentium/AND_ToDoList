@@ -72,6 +72,7 @@ class CategoryDAO(
         val selectionArgs = null
         val sortOrder = null
         try {
+            open()
             val cursor = db.query(
                 Category.TABLE_NAME,       // table name
                 projection,             // array of cols to return (write null to get all)
@@ -99,6 +100,7 @@ class CategoryDAO(
         val items: MutableList<Category> = mutableListOf()
         val projection: Array<String> = arrayOf(Category.COLUMN_ID, Category.COLUMN_NAME)
         try {
+            open()
             val cursor = db.query(
                 Category.TABLE_NAME,       // table name
                 projection,             // array of cols to return (write null to get all)
@@ -116,6 +118,7 @@ class CategoryDAO(
                 items.add(category)
             }
         } catch (e: Exception) {
+            L.log("ERROR")
             e.printStackTrace()
         } finally {
             close()
