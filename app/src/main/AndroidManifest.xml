@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AND_ToDoList">
         <activity
+            android:name=".activities.TaskListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.CategoryActivity"
             android:exported="false" />
         <activity
