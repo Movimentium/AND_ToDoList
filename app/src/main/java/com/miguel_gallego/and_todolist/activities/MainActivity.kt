@@ -34,7 +34,8 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
+        supportActionBar?.setTitle("To Do List")
+        supportActionBar?.setSubtitle("Categories")
 
         categoryDAO = CategoryDAO(this)
         adapter = CategoryAdapter(catetegoryList,

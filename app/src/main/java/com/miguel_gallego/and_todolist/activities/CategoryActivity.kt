@@ -1,6 +1,7 @@
 package com.miguel_gallego.and_todolist.activities
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.inputmethod.InputBinding
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -30,13 +31,16 @@ class CategoryActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         categoryDAO = CategoryDAO(this)
         val categoryId = intent.getIntExtra(kCategoryId,-1)
-        if (categoryId == -1) {  // create new category
-            category = categoryDAO.getCategoryWithId(categoryId)!!  //WARNING DANGEROUS
-        } else {  // edit existing category
+        if (categoryId == -1) {
             category = Category(-1, "")
+            supportActionBar?.setTitle("New Category")
+        } else {
+            category = categoryDAO.getCategoryWithId(categoryId)!!
+            supportActionBar?.setTitle("Edit Category")
         }
 
         binding.txtEditName.editText?.setText(category.name)
@@ -51,7 +55,12 @@ class CategoryActivity : AppCompatActivity() {
                 finish()  // CategoryActivity disappears
             }
         }
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // There is only one item: back
+        finish()
+        return true
     }
 
 
