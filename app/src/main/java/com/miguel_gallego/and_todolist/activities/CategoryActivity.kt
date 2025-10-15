@@ -18,29 +18,40 @@ class CategoryActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityCategoryBinding
     lateinit var categoryDAO: CategoryDAO
+    lateinit var category: Category
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        categoryDAO = CategoryDAO(this)
-
         binding = ActivityCategoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.btnSave.setOnClickListener {
-            val categoryName = binding.txtEditName.editText?.text.toString()
-            if (categoryName != null) {
-                val category = Category(-1, categoryName)
-                categoryDAO.insert(category)
-                finish()  // CategoryActivity disappears
-            }
-        }
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        categoryDAO = CategoryDAO(this)
+        val categoryId = intent.getIntExtra(kCategoryId,-1)
+        if (categoryId == -1) {  // create new category
+            category = categoryDAO.getCategoryWithId(categoryId)!!  //WARNING DANGEROUS
+        } else {  // edit existing category
+            category = Category(-1, "")
+        }
+
+        binding.txtEditName.editText?.setText(category.name)
+        binding.btnSave.setOnClickListener {
+            category.name = binding.txtEditName.editText?.text.toString()  // TODO trimming, validate
+            if (!category.name.isEmpty()) {
+                if (category.id == -1) {
+                    categoryDAO.insert(category)
+                } else {
+                    categoryDAO.update(category)
+                }
+                finish()  // CategoryActivity disappears
+            }
+        }
+
     }
 
 
