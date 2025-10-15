@@ -12,6 +12,9 @@ import com.miguel_gallego.and_todolist.data.CategoryDAO
 import com.miguel_gallego.and_todolist.databinding.ActivityCategoryBinding
 
 class CategoryActivity : AppCompatActivity() {
+    companion object {
+        val kCategoryId = "CATEGORY_ID"
+    }
 
     lateinit var binding: ActivityCategoryBinding
     lateinit var categoryDAO: CategoryDAO
