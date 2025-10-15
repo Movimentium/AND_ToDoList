@@ -1,7 +1,5 @@
 package com.miguel_gallego.and_todolist.activities
 
-import android.app.Dialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -39,16 +37,15 @@ class MainActivity : AppCompatActivity() {
 
 
         categoryDAO = CategoryDAO(this)
-        adapter = CategoryAdapter(catetegoryList, {
-
-        })
+        adapter = CategoryAdapter(catetegoryList,
+            onCategoryClick, onEditCategory, ::deleteCategoryAt)
         binding.vwRecycler.adapter = adapter
         binding.vwRecycler.layoutManager = LinearLayoutManager(this)
         binding.btnCreate.setOnClickListener {
             val intent = Intent(this, CategoryActivity::class.java)
             startActivity(intent)
         }
-         debug_db_test_add_two_categories()
+        // debug_db_test_add_two_categories()
 
     }
 
@@ -62,11 +59,11 @@ class MainActivity : AppCompatActivity() {
         adapter.updateItems(catetegoryList)
     }
 
-    private val onItemClick: (Int) -> Unit = {
+    private val onCategoryClick: (Int) -> Unit = {
 
     }
 
-    private val onEditItem: (Int) -> Unit = {
+    private val onEditCategory: (Int) -> Unit = {
         val category = catetegoryList[it]
         val intent = Intent(this, CategoryActivity::class.java)
         intent.putExtra(CategoryActivity.kCategoryId, category.id)
