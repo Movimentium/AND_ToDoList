@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.miguel_gallego.and_todolist.R
 import com.miguel_gallego.and_todolist.data.Category
-import com.miguel_gallego.and_todolist.data.CategoryAdapter
+import com.miguel_gallego.and_todolist.adapters.CategoryAdapter
 import com.miguel_gallego.and_todolist.data.CategoryDAO
 import com.miguel_gallego.and_todolist.databinding.ActivityMainBinding
 import com.miguel_gallego.and_todolist.utils.L

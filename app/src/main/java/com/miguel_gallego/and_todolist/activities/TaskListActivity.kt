@@ -1,6 +1,7 @@
 package com.miguel_gallego.and_todolist.activities
 
 import android.os.Bundle
+import android.renderscript.ScriptGroup
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -8,6 +9,10 @@ import androidx.core.view.WindowInsetsCompat
 import com.miguel_gallego.and_todolist.R
 
 class TaskListActivity : AppCompatActivity() {
+
+    lateinit var binding: TaskListActivityBinding
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

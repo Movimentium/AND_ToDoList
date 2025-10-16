@@ -1,8 +1,9 @@
-package com.miguel_gallego.and_todolist.data
+package com.miguel_gallego.and_todolist.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.miguel_gallego.and_todolist.data.Category
 import com.miguel_gallego.and_todolist.databinding.ItemCategoryBinding
 
 class CategoryAdapter(
