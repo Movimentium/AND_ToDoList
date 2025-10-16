@@ -48,5 +48,6 @@ class TaskViewHolder(
 
     fun render(task: Task) {
         binding.tvTitle.text = task.title
+        binding.checkDone.isChecked = task.done
     }
 }

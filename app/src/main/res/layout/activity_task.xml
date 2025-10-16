@@ -5,11 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.TaskListActivity">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/vwRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    tools:context=".activities.TaskActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>
