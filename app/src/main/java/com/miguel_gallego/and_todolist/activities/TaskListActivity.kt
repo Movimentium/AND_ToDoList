@@ -36,7 +36,7 @@ class TaskListActivity : AppCompatActivity() {
         adapter = TaskAdapter(taskList, {},{}, {})
         binding.vwRecycler.adapter = adapter
         binding.vwRecycler.layoutManager = LinearLayoutManager(this)
-        binding,
+        //binding,
     }
 
 

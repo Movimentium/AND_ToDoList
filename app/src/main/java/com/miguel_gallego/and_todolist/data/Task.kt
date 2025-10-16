@@ -3,7 +3,8 @@ package com.miguel_gallego.and_todolist.data
 class Task(
     val id: Int,
     val title: String,
-    val done: Boolean
+    val done: Boolean,
+    val category: Category
 ) {
     companion object {
         const val TABLE_NAME = "Task"
