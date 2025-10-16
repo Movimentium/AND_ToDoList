@@ -14,7 +14,7 @@ class CategoryAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ItemCategoryBinding.inflate(layoutInflater)
+        val binding = ItemCategoryBinding.inflate(layoutInflater, parent, false)
         return CategoryViewHolder(binding)
     }
 
