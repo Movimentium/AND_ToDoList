@@ -14,6 +14,7 @@ import com.miguel_gallego.and_todolist.data.Category
 import com.miguel_gallego.and_todolist.adapters.CategoryAdapter
 import com.miguel_gallego.and_todolist.data.CategoryDAO
 import com.miguel_gallego.and_todolist.databinding.ActivityMainBinding
+import com.miguel_gallego.and_todolist.utils.K
 import com.miguel_gallego.and_todolist.utils.L
 
 class MainActivity : AppCompatActivity() {
@@ -61,13 +62,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val onCategoryClick: (Int) -> Unit = {
-
+        val categoryId = catetegoryList[it].id
+        val intent = Intent(this, TaskListActivity::class.java)
+        intent.putExtra(K.categoryIdKey, categoryId)
+        startActivity(intent)
     }
 
     private val onEditCategory: (Int) -> Unit = {
         val category = catetegoryList[it]
         val intent = Intent(this, CategoryActivity::class.java)
-        intent.putExtra(CategoryActivity.kCategoryId, category.id)
+        intent.putExtra(K.categoryIdKey, category.id)
         startActivity(intent)
     }
 

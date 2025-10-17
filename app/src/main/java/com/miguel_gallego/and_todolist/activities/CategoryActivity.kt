@@ -11,11 +11,9 @@ import com.miguel_gallego.and_todolist.R
 import com.miguel_gallego.and_todolist.data.Category
 import com.miguel_gallego.and_todolist.data.CategoryDAO
 import com.miguel_gallego.and_todolist.databinding.ActivityCategoryBinding
+import com.miguel_gallego.and_todolist.utils.K
 
 class CategoryActivity : AppCompatActivity() {
-    companion object {
-        val kCategoryId = "CATEGORY_ID"
-    }
 
     lateinit var binding: ActivityCategoryBinding
     lateinit var categoryDAO: CategoryDAO
@@ -32,9 +30,10 @@ class CategoryActivity : AppCompatActivity() {
             insets
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.outline_close_24)
 
         categoryDAO = CategoryDAO(this)
-        val categoryId = intent.getIntExtra(kCategoryId,-1)
+        val categoryId = intent.getIntExtra(K.categoryIdKey,-1)
         if (categoryId == -1) {
             category = Category(-1, "")
             supportActionBar?.setTitle("New Category")
@@ -58,7 +57,7 @@ class CategoryActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // There is only one item: back
+        // There is only one item: 'Home' (close)
         finish()
         return true
     }
