@@ -52,6 +52,8 @@ class CategoryActivity : AppCompatActivity() {
                     categoryDAO.update(category)
                 }
                 finish()  // CategoryActivity disappears
+            } else {
+                // TODO: Show msg to user
             }
         }
     }
@@ -61,6 +63,4 @@ class CategoryActivity : AppCompatActivity() {
         finish()
         return true
     }
-
-
 }
