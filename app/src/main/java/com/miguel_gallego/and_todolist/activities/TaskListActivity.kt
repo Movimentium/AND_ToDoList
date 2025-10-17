@@ -1,5 +1,7 @@
 package com.miguel_gallego.and_todolist.activities
 
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.renderscript.ScriptGroup
 import android.view.MenuItem
@@ -11,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.miguel_gallego.and_todolist.R
 import com.miguel_gallego.and_todolist.adapters.HeaderAdapter
 import com.miguel_gallego.and_todolist.adapters.TaskAdapter
@@ -68,7 +71,9 @@ class TaskListActivity : AppCompatActivity() {
         binding.vwRecycler.adapter = ConcatAdapter(headToDoAdapter, taskToDoAdapter, headDoneAdapter, headDoneAdapter)
         binding.vwRecycler.layoutManager = LinearLayoutManager(this)
         binding.btnCreate.setOnClickListener {
-            TODO()
+            val intent = Intent(this, TaskActivity::class.java)
+            intent.putExtra(K.categoryIdKey, categoryId)
+            startActivity(intent)
         }
     }
 
@@ -89,17 +94,37 @@ class TaskListActivity : AppCompatActivity() {
         taskDoneAdapter.updateItems(taskDoneList)
     }
 
-    // TODO: SEGUIR AQUÍ
-    private fun onClickTask(position: Int) {
-
+    private fun onClickTask(position: Int, taskList: List<Task>) {  // Edit Task
+        val task = taskList[position]
+        val intent = Intent(this, TaskActivity::class.java)
+        intent.putExtra(K.categoryIdKey, category.id)
+        intent.putExtra(K.taskIdKey, task.id)
+        startActivity(intent)
     }
 
-    private fun onCheckTask(position: Int) {
-
+    private fun onCheckTask(position: Int, taskList: List<Task>) {
+        val task = taskList[position]
+        task.done = !task.done
+        taskDAO.update(task)
+        reloadData()
     }
 
-    private fun onDeleteTask(position: Int) {
+    private fun onDeleteTask(position: Int, taskList: List<Task>) {
+        getAlertSureDeleteTask(taskList[position]).show()
+    }
 
+    private fun getAlertSureDeleteTask(task: Task): AlertDialog {
+        return AlertDialog.Builder(this)
+            .setTitle("Delete task")
+            .setMessage("Are you sure you want to delete the task '${task.title}'")
+            .setNegativeButton("No", null)
+            .setPositiveButton("Yes") { _, _ ->
+                taskDAO.delete(task)
+                reloadData()
+                Snackbar.make(binding.root, "Task '${task.title}' deleted", Snackbar.LENGTH_LONG)
+                    .show()
+            }
+            .create()
     }
 
 }

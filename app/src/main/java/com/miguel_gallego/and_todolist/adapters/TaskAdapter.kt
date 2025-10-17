@@ -8,9 +8,9 @@ import com.miguel_gallego.and_todolist.databinding.ItemTaskBinding
 
 class TaskAdapter(
     var items: List<Task>,
-    val onClick: (Int) -> Unit,
-    val onCheck: (Int) -> Unit,
-    val onDelete: (Int) -> Unit
+    val onClick: (Int, List<Task>) -> Unit,
+    val onCheck: (Int, List<Task>) -> Unit,
+    val onDelete: (Int, List<Task>) -> Unit
 ): RecyclerView.Adapter<TaskViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -23,13 +23,13 @@ class TaskAdapter(
         val item = items[position]
         holder.render(item)
         holder.itemView.setOnClickListener {
-            onClick(position)
+            onClick(position, items)
         }
         holder.binding.checkDone.setOnCheckedChangeListener { _, _ ->
-            onCheck(position)
+            onCheck(position, items)
         }
         holder.binding.btnDelete.setOnClickListener {
-            onDelete(position)
+            onDelete(position, items)
         }
     }
 

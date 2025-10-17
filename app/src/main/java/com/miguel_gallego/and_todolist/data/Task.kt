@@ -3,7 +3,7 @@ package com.miguel_gallego.and_todolist.data
 class Task(
     val id: Int,
     var title: String,
-    val done: Boolean,
+    var done: Boolean,
     val category: Category
 ) {
     companion object {

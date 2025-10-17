@@ -76,9 +76,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun deleteCategoryAt(position: Int) {
-        val category = catetegoryList[position]
-        val alertSureDelete = getAlertSureDeleteCategory(category)
-        alertSureDelete.show()
+        getAlertSureDeleteCategory(catetegoryList[position]).show()
     }
 
     private fun getAlertSureDeleteCategory(category: Category): AlertDialog {
