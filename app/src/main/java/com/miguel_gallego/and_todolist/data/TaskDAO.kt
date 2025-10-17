@@ -30,7 +30,7 @@ class TaskDAO(
         return values
     }
 
-    private fun readFromCurso(cursor: Cursor): Task {
+    private fun readFromCursor(cursor: Cursor): Task {
         val id = cursor.getInt(cursor.getColumnIndexOrThrow(Task.COLUMN_ID))
         val title = cursor.getString(cursor.getColumnIndexOrThrow(Task.COLUMN_TITLE)) // String
         val done = cursor.getInt(cursor.getColumnIndexOrThrow(Task.COLUMN_DONE)) != 0 // Boolean
@@ -45,7 +45,7 @@ class TaskDAO(
         val values = getContentValues(task)
         try {
             open()
-            // Insert new row, and returns his primary key
+            // Insert new row, returns his primary key
             val newRowId = db.insert(Task.TABLE_NAME, null, values)
             L.log("New task in table ${Task.TABLE_NAME} with task.id: $newRowId")
         } catch (e: Exception) {
@@ -60,10 +60,67 @@ class TaskDAO(
         val values = getContentValues(task)
         try {
             open()
+            // Insert row, returns his primary key
+            val updatedRows = db.update(Task.TABLE_NAME, values, "${Task.COLUMN_ID} = ${task.id}", null)
+            L.log("$updatedRows rows updated in table ${Task.TABLE_NAME}")
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
             close()
         }
+    }
+
+    fun delete(task: Task) {
+        delete(task.id)
+    }
+
+    private fun delete(id: Int) {
+        try {
+            open()
+            // Insert row, returns his primary key
+            val deletedRows = db.delete(Task.TABLE_NAME, "${Task.COLUMN_ID} = $id", null)
+            L.log("$deletedRows rows deleted in table ${Task.TABLE_NAME}")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            close()
+        }
+    }
+
+    fun getAllTasks(): List<Task> {
+        return getTasksWhere(null)
+    }
+
+    fun getTasksOfCategory(category: Category): List<Task> {
+        return getTasksWhere("${Task.COLUMN_CATEGORY} = ${category.id}")
+    }
+
+    fun getTasksOfCategoryOfDone(category: Category, done: Boolean): List<Task> {
+        return getTasksWhere("${Task.COLUMN_CATEGORY} = ${category.id} AND ${Task.COLUMN_DONE} = $done")
+    }
+
+    fun getTasksWhere(selection: String?): List<Task> {
+        val items = mutableListOf<Task>()
+        try {
+            open()
+            val cursor = db.query(
+                Task.TABLE_NAME,
+                null,           // Array of columns to return (null to get all cols)
+                selection,                // WHERE clause
+                null,       // values for WHERE clause
+                null,           // don't group the rows
+                null,             // don't filter by row groups
+                null             // sort order
+            )
+            while (cursor.moveToNext()) {
+                val task = readFromCursor(cursor)
+                items.add(task)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            close()
+        }
+        return items
     }
 }
