@@ -91,6 +91,10 @@ class TaskDAO(
         return getTasksWhere(null)
     }
 
+    fun getTaskWithId(taskId: Int): Task? {
+        return getTasksWhere("${Task.COLUMN_ID} = $taskId").firstOrNull()
+    }
+
     fun getTasksOfCategory(category: Category): List<Task> {
         return getTasksWhere("${Task.COLUMN_CATEGORY} = ${category.id}")
     }

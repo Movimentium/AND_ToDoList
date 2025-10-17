@@ -2,7 +2,7 @@ package com.miguel_gallego.and_todolist.data
 
 class Task(
     val id: Int,
-    val title: String,
+    var title: String,
     val done: Boolean,
     val category: Category
 ) {
