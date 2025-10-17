@@ -5,9 +5,11 @@ import android.renderscript.ScriptGroup
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.motion.widget.KeyPosition
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.miguel_gallego.and_todolist.R
 import com.miguel_gallego.and_todolist.adapters.HeaderAdapter
@@ -25,8 +27,8 @@ class TaskListActivity : AppCompatActivity() {
 
     lateinit var taskToDoAdapter: TaskAdapter
     lateinit var taskDoneAdapter: TaskAdapter
-    lateinit var HeadToDoAdapter: HeaderAdapter
-    lateinit var HeadDoneAdapter: HeaderAdapter
+    lateinit var headToDoAdapter: HeaderAdapter
+    lateinit var headDoneAdapter: HeaderAdapter
 
     var taskToDoList: List<Task> = emptyList()
     var taskDoneList: List<Task> = emptyList()
@@ -46,19 +48,28 @@ class TaskListActivity : AppCompatActivity() {
             insets
         }
 
+        // Model data
         taskDAO = TaskDAO(this)
         categoryDAO = CategoryDAO(this)
         val categoryId = intent.getIntExtra(K.categoryIdKey, -1)
         category = categoryDAO.getCategoryWithId(categoryId)!!
 
+        // ActionBar
         supportActionBar?.title = category.name
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        // Adapters
+        taskToDoAdapter = TaskAdapter(taskToDoList, ::onClickTask, ::onCheckTask, ::onDeleteTask)
+        taskDoneAdapter = TaskAdapter(taskDoneList, ::onClickTask, ::onCheckTask, ::onDeleteTask)
+        headToDoAdapter = HeaderAdapter("To Do List")
+        headDoneAdapter = HeaderAdapter("Done List")
 
-        adapter = TaskAdapter(taskList, {},{}, {})
-        binding.vwRecycler.adapter = adapter
+        // Binding
+        binding.vwRecycler.adapter = ConcatAdapter(headToDoAdapter, taskToDoAdapter, headDoneAdapter, headDoneAdapter)
         binding.vwRecycler.layoutManager = LinearLayoutManager(this)
-        //binding,
+        binding.btnCreate.setOnClickListener {
+            TODO()
+        }
     }
 
     override fun onResume() {
@@ -78,6 +89,17 @@ class TaskListActivity : AppCompatActivity() {
         taskDoneAdapter.updateItems(taskDoneList)
     }
 
-
     // TODO: SEGUIR AQUÍ
+    private fun onClickTask(position: Int) {
+
+    }
+
+    private fun onCheckTask(position: Int) {
+
+    }
+
+    private fun onDeleteTask(position: Int) {
+
+    }
+
 }
